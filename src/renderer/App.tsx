@@ -1,18 +1,40 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import icon from '../../assets/icon.svg';
 import './App.css';
+// import { MeasureType, ValueType } from '../main/serialport';
+
+// function isValueType(value: unknown): value is ValueType {
+//   return Object.values(ValueType).includes(value as ValueType);
+// }
+
+// function isMeasureType(value: unknown): value is MeasureType {
+//   return Object.values(MeasureType).includes(value as MeasureType);
+// }
 
 function Hello() {
+  // const [value, setValue] = useState<number | null>(null);
+  // const [valueType, setValueType] = useState<ValueType | null>(null);
+  // const [measureType, setMeasureType] = useState<MeasureType | null>(null);
+  const [connection, setConnection] = useState<boolean>(false);
+
   useEffect(() => {
     window.electron.ipcRenderer.sendMessage('data-connect');
   }, []);
 
   useEffect(() => {
     window.electron.ipcRenderer.on('data-connection-status', (event) => {
-      // eslint-disable-next-line no-console
-      console.log(event);
+      if (typeof event === 'boolean') setConnection(event);
     });
+    // window.electron.ipcRenderer.on('data-value', (event) => {
+    //   if (typeof event === 'number') setValue(event);
+    // });
+    // window.electron.ipcRenderer.on('data-measure-type', (event) => {
+    //   if (isMeasureType(event)) setMeasureType(event);
+    // });
+    // window.electron.ipcRenderer.on('data-measure-type', (event) => {
+    //   if (isValueType(event)) setValueType(event);
+    // });
   }, []);
 
   // useEffect(() => {
@@ -56,6 +78,12 @@ function Hello() {
             Donate
           </button>
         </a>
+      </div>
+      <div>
+        {/* <span>{value}</span>
+        <span>{valueType}</span>
+        <span>{measureType}</span> */}
+        <span>{connection ? 'Connected' : 'Disconnected'}</span>
       </div>
     </div>
   );
