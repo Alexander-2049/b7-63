@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 
-function useIPC() {
+export interface IPCState {
+  value: number | null;
+  valueType: string | null;
+  measureType: string | null;
+  connection: boolean;
+}
+
+function useIPC(): IPCState {
   const [value, setValue] = useState<number | null>(null);
   const [valueType, setValueType] = useState<string | null>(null);
   const [measureType, setMeasureType] = useState<string | null>(null);
