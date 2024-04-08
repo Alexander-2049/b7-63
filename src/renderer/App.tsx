@@ -1,32 +1,10 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import useIPC from './hooks/useIPC';
 
 function Hello() {
-  const [value, setValue] = useState<number | null>(null);
-  const [valueType, setValueType] = useState<string | null>(null);
-  const [measureType, setMeasureType] = useState<string | null>(null);
-  const [connection, setConnection] = useState<boolean>(false);
-
-  useEffect(() => {
-    window.electron.ipcRenderer.sendMessage('data-connect');
-  }, []);
-
-  useEffect(() => {
-    window.electron.ipcRenderer.on('data-connection-status', (event) => {
-      if (typeof event === 'boolean') setConnection(event);
-    });
-    window.electron.ipcRenderer.on('data-value', (event) => {
-      if (typeof event === 'number') setValue(event);
-    });
-    window.electron.ipcRenderer.on('data-measure-type', (event) => {
-      if (typeof event === 'string') setMeasureType(event);
-    });
-    window.electron.ipcRenderer.on('data-value-type', (event) => {
-      if (typeof event === 'string') setValueType(event);
-    });
-  }, []);
+  const { value, valueType, measureType, connection } = useIPC();
 
   return (
     <div>
