@@ -171,6 +171,11 @@ const startScanning = async (): Promise<void> => {
     e?.reply('data-connection-status', false);
     startScanning(); // Restart port scanning
   });
+
+  port.on('error', () => {
+    e?.reply('data-connection-status', false);
+    startScanning(); // Restart port scanning
+  });
 };
 
 export default startScanning;
