@@ -71,6 +71,8 @@ function getMeasureType(value: string): MeasureType {
       return MeasureType.CURRENT_MILAMPS;
     case 'Z':
       return MeasureType.FREQ_HZ;
+    case 'H':
+      return MeasureType.FREQ_HZ;
     case 'K':
       return MeasureType.FREQ_KHZ;
     case 'L':
